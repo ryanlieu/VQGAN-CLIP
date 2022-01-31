@@ -64,7 +64,7 @@ async def generate_image(ctx, *args):
     generate.generate_image(final_args)
 
     if len(ctx.message.attachments) > 0:
-        print(ctx.message.attachments[0].url)
+        args.init_image = ctx.message.attachments[0].url
     with open("output.png", "rb") as fh:
         f = discord.File(fh, filename="output.png")
     await ctx.send(file=f)
