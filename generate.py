@@ -5,7 +5,7 @@ import argparse
 import math
 import random
 # from email.policy import default
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 from tqdm import tqdm
 import sys
 import os
@@ -544,7 +544,9 @@ def generate_image(args):
 
     if args.init_image:
         if 'http' in args.init_image:
-            img = Image.open(urlopen(args.init_image))
+            hdr = { 'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)' }
+            req = urllib.request.Request(args.init_image, headers=hdr)
+            img = Image.open(urllib.request.urlopen(req))
         else:
             img = Image.open(args.init_image)
             pil_image = img.convert('RGB')
