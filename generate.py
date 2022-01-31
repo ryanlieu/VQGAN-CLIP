@@ -5,7 +5,7 @@ import argparse
 import math
 import random
 # from email.policy import default
-from urllib.request import Request, urlopen
+import urllib.request
 from tqdm import tqdm
 import sys
 import os
