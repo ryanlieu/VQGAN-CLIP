@@ -9,7 +9,7 @@ checkpoints/
 
 # Editor
 .vscode/
-
+.env/
 # Operations
 outputs/
 steps/
