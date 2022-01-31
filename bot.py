@@ -3,7 +3,7 @@ import os
 import random
 import argparse
 import discord
-# import generate
+import generate
 
 from discord.ext import commands
 from dotenv import load_dotenv
