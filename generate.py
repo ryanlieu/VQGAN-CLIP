@@ -549,10 +549,10 @@ def generate_image(args):
             img = Image.open(urllib.request.urlopen(req))
         else:
             img = Image.open(args.init_image)
-            pil_image = img.convert('RGB')
-            pil_image = pil_image.resize((sideX, sideY), Image.LANCZOS)
-            pil_tensor = TF.to_tensor(pil_image)
-            z, *_ = model.encode(pil_tensor.to(device).unsqueeze(0) * 2 - 1)
+        pil_image = img.convert('RGB')
+        pil_image = pil_image.resize((sideX, sideY), Image.LANCZOS)
+        pil_tensor = TF.to_tensor(pil_image)
+        z, *_ = model.encode(pil_tensor.to(device).unsqueeze(0) * 2 - 1)
     elif args.init_noise == 'pixels':
         img = random_noise_image(args.size[0], args.size[1])    
         pil_image = img.convert('RGB')
