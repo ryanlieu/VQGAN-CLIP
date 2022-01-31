@@ -2,6 +2,7 @@
 import os
 import random
 import argparse
+import discord
 # import generate
 
 from discord.ext import commands
@@ -64,6 +65,9 @@ async def generate_image(ctx, *args):
 
     if len(ctx.message.attachments) > 0:
         print(ctx.message.attachments[0].url)
-    await ctx.send('{} arguments: {}'.format(len(args), ', '.join(args)))
+    with open("output.png", "rb") as fh:
+        f = discord.File(fh, filename="output.png")
+    await ctx.send(file=f)
+    # await ctx.send('{} arguments: {}'.format(len(args), ', '.join(args)))
 
 bot.run(TOKEN)
