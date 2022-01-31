@@ -61,13 +61,16 @@ async def generate_image(ctx, *args):
     final_args = vq_parser.parse_args(args)
     print(args)
     print(final_args)
+    if len(ctx.message.attachments) > 0:
+        final_args.init_image = ctx.message.attachments[0].url
+    await ctx.send("Generating image! Check back in a couple of minutes")
     generate.generate_image(final_args)
 
-    if len(ctx.message.attachments) > 0:
-        args.init_image = ctx.message.attachments[0].url
+
     with open("output.png", "rb") as fh:
         f = discord.File(fh, filename="output.png")
     await ctx.send(file=f)
     # await ctx.send('{} arguments: {}'.format(len(args), ', '.join(args)))
 
+print("VQGAN discord bot up and running!")
 bot.run(TOKEN)
