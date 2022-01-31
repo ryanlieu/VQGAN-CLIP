@@ -51,6 +51,12 @@ Install other required Python packages:
 pip install ftfy regex tqdm omegaconf pytorch-lightning IPython kornia imageio imageio-ffmpeg einops torch_optimizer
 ```
 
+Install packages for the discord bot:
+
+```sh
+pip install discord.py dotenv
+```
+
 Or use the ```requirements.txt``` file, which includes version numbers.
 
 Clone required repositories:
@@ -120,6 +126,14 @@ conda remove --name vqgan --all
 and delete the `VQGAN-CLIP` directory.
 
 ## Run
+
+To run the discord bot, just run:
+
+```sh
+python bot.py
+```
+
+The bot takes all the same commands as the original program, and image attachments in messages are used as initial images.
 
 To generate images from text, specify your text prompt as shown in the example below:
 
