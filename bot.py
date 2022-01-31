@@ -60,6 +60,7 @@ async def generate_image(ctx, *args):
     # Execute the parse_args() method
     final_args = vq_parser.parse_args(args)
     if len(ctx.message.attachments) > 0:
+        print(message.attachments)
         final_args.init_image = ctx.message.attachments[0].url
     await ctx.send("Generating image! Check back in a couple of minutes")
     print(args)
