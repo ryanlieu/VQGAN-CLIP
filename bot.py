@@ -61,7 +61,7 @@ async def generate_image(ctx, *args):
     final_args = vq_parser.parse_args(args)
     print(args)
     print(final_args)
-    # generate.generate_image(final_args)
+    generate.generate_image(final_args)
 
     if len(ctx.message.attachments) > 0:
         print(ctx.message.attachments[0].url)
