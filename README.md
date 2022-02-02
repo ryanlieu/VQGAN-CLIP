@@ -50,6 +50,8 @@ Install other required Python packages:
 ```sh
 pip install ftfy regex tqdm omegaconf pytorch-lightning IPython kornia imageio imageio-ffmpeg einops torch_optimizer
 ```
+Or use the ```requirements.txt``` file, which includes version numbers.
+
 
 Install packages for the discord bot:
 
@@ -57,7 +59,12 @@ Install packages for the discord bot:
 pip install discord.py dotenv
 ```
 
-Or use the ```requirements.txt``` file, which includes version numbers.
+Add your .env discord bot variables to .env:
+
+```sh
+DISCORD_TOKEN={YOUR DISCORD TOKEN HERE}
+DISCORD_GUILD={YOUR SERVER NAME HERE}
+```
 
 Clone required repositories:
 
