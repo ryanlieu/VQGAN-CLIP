@@ -707,13 +707,7 @@ def generate_image(args):
         opt.zero_grad(set_to_none=True)
         lossAll = ascend_txt()
         
-        print("BBBBBB")
-        print(i)
-        print(args.display_freq)
-        print(i % args.display_freq)
-        print(i % args.display_freq == 0)
         if i % args.display_freq == 0:
-            print("WTF")
             checkin(i, lossAll)
         
         loss = sum(lossAll)
