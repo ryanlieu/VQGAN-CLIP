@@ -5,6 +5,7 @@ import generate
 
 from discord.commands import Option
 from dotenv import load_dotenv
+from types import SimpleNamespace
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -36,7 +37,7 @@ async def generate_image(
     ):
   
     await ctx.respond("Generating image! Check back in a couple of minutes")
-    final_args = {}
+    final_args = SimpleNamespace()
     final_args['prompts'] = prompts
     final_args['image_prompts'] = image_prompts
     final_args['max_iterations'] = max_iterations
