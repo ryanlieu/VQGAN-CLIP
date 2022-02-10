@@ -38,42 +38,78 @@ async def generate_image(
   
     await ctx.respond("Generating image! Check back in a couple of minutes")
     final_args = SimpleNamespace()
-    final_args['prompts'] = prompts
-    final_args['image_prompts'] = image_prompts
-    final_args['max_iterations'] = max_iterations
-    final_args['display_freq'] = display_freq
-    final_args['size'] = [width, height]
-    final_args['init_image'] = init_image
-    final_args['init_noise'] = init_noise
-    final_args['init_weight'] = float(init_weight)
-    final_args['clip_model'] = clip_model
-    final_args['vqgan_config'] = 'checkpoints/vqgan_imagenet_f16_16384.yaml'
-    final_args['vqgan_checkpoint'] = 'checkpoints/vqgan_imagenet_f16_16384.ckpt'
-    final_args['noise_prompt_seeds'] = [] if not noise_prompt_seeds else [int(x.strip()) for x in noise_prompt_seeds.split("|")]
-    final_args['noise_prompt_weights'] = [] if not noise_prompt_weights else [float(x.strip()) for x in noise_prompt_weights.split("|")]
-    final_args['step_size'] = float(step_size)
-    final_args['cut_method'] = cut_method
-    final_args['cutn'] = cutn
-    final_args['cut_pow'] = float(cut_pow)
-    final_args['seed'] = None if seed == -1 else seed
-    final_args['optimiser'] = optimiser
-    final_args['output'] = output
+    setattr(final_args, 'prompts', prompts)
+    setattr(final_args, 'image_prompts', image_prompts)
+    setattr(final_args, 'max_iterations', max_iterations)
+    setattr(final_args, 'display_freq', display_freq)
+    setattr(final_args, 'size', [width, height])
+    setattr(final_args, 'init_image', init_image)
+    setattr(final_args, 'init_noise', init_noise)
+    setattr(final_args, 'init_weight', init_weight)
+    setattr(final_args, 'clip_model', clip_model)
+    setattr(final_args, 'vqgan_config', 'checkpoints/vqgan_imagenet_f16_16384.yaml')
+    setattr(final_args, 'vqgan_checkpoint', 'checkpoints/vqgan_imagenet_f16_16384.ckpt')
+    setattr(final_args, 'noise_prompt_seeds', [] if not noise_prompt_seeds else [int(x.strip()) for x in noise_prompt_seeds.split("|")])
+    setattr(final_args, 'noise_prompt_weights', [] if not noise_prompt_weights else [float(x.strip()) for x in noise_prompt_weights.split("|")])
+    setattr(final_args, 'step_size', float(step_size))
+    setattr(final_args, 'cut_method', cut_method)
+    setattr(final_args, 'cutn', cutn)
+    setattr(final_args, 'cut_pow', float(cut_pow))
+    setattr(final_args, 'seed', None if seed == -1 else seed)
+    setattr(final_args, 'optimiser', optimiser)
+    setattr(final_args, 'output', output)
+    setattr(final_args, 'make_video', False)
+    setattr(final_args, 'make_zoom_video', False)
+    setattr(final_args, 'zoom_start', 0)
+    setattr(final_args, 'zoom_frequency', 10)
+    setattr(final_args, 'zoom_scale', 0.99)
+    setattr(final_args, 'zoom_shift_x', 0)
+    setattr(final_args, 'zoom_shift_y', 0)
+    setattr(final_args, 'prompt_frequency', 0)
+    setattr(final_args, 'video_length', 10)
+    setattr(final_args, 'output_video_fps', 0)
+    setattr(final_args, 'input_video_fps', 15)
+    setattr(final_args, 'cudnn_determinism', False)
+    setattr(final_args, 'augments', [])
+    setattr(final_args, 'video_style_dir', None)
+    setattr(final_args, 'cuda_device', 'cuda:0')
 
-    final_args['make_video'] = False
-    final_args['make_zoom_video'] = False
-    final_args['zoom_start'] = 0
-    final_args['zoom_frequency'] = 10
-    final_args['zoom_scale'] = 0.99
-    final_args['zoom_shift_x'] = 0
-    final_args['zoom_shift_y'] = 0
-    final_args['prompt_frequency'] = 0
-    final_args['video_length'] = 10
-    final_args['output_video_fps'] = 0
-    final_args['input_video_fps'] = 15
-    final_args['cudnn_determinism'] = False
-    final_args['augments'] = [],
-    final_args['video_style_dir'] = None
-    final_args['cuda_device'] = 'cuda:0'
+    # final_args['prompts'] = prompts
+    # final_args['image_prompts'] = image_prompts
+    # final_args['max_iterations'] = max_iterations
+    # final_args['display_freq'] = display_freq
+    # final_args['size'] = [width, height]
+    # final_args['init_image'] = init_image
+    # final_args['init_noise'] = init_noise
+    # final_args['init_weight'] = float(init_weight)
+    # final_args['clip_model'] = clip_model
+    # final_args['vqgan_config'] = 'checkpoints/vqgan_imagenet_f16_16384.yaml'
+    # final_args['vqgan_checkpoint'] = 'checkpoints/vqgan_imagenet_f16_16384.ckpt'
+    # final_args['noise_prompt_seeds'] = [] if not noise_prompt_seeds else [int(x.strip()) for x in noise_prompt_seeds.split("|")]
+    # final_args['noise_prompt_weights'] = [] if not noise_prompt_weights else [float(x.strip()) for x in noise_prompt_weights.split("|")]
+    # final_args['step_size'] = float(step_size)
+    # final_args['cut_method'] = cut_method
+    # final_args['cutn'] = cutn
+    # final_args['cut_pow'] = float(cut_pow)
+    # final_args['seed'] = None if seed == -1 else seed
+    # final_args['optimiser'] = optimiser
+    # final_args['output'] = output
+
+    # final_args['make_video'] = False
+    # final_args['make_zoom_video'] = False
+    # final_args['zoom_start'] = 0
+    # final_args['zoom_frequency'] = 10
+    # final_args['zoom_scale'] = 0.99
+    # final_args['zoom_shift_x'] = 0
+    # final_args['zoom_shift_y'] = 0
+    # final_args['prompt_frequency'] = 0
+    # final_args['video_length'] = 10
+    # final_args['output_video_fps'] = 0
+    # final_args['input_video_fps'] = 15
+    # final_args['cudnn_determinism'] = False
+    # final_args['augments'] = [],
+    # final_args['video_style_dir'] = None
+    # final_args['cuda_device'] = 'cuda:0'
 
     
 
