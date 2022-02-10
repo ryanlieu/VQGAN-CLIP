@@ -596,7 +596,12 @@ def generate_image(args):
 
     for prompt in args.image_prompts:
         path, weight, stop = split_prompt(prompt)
-        img = Image.open(path)
+        if 'http' in path:
+            hdr = { 'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)' }
+            req = urllib.request.Request(args.init_image, headers=hdr)
+            img = Image.open(urllib.request.urlopen(req))
+        else:
+            img = Image.open(path)
         pil_image = img.convert('RGB')
         img = resize_image(pil_image, (sideX, sideY))
         batch = make_cutouts(TF.to_tensor(img).unsqueeze(0).to(device))
