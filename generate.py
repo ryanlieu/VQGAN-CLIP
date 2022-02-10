@@ -708,7 +708,9 @@ def generate_image(args):
         lossAll = ascend_txt()
         
         print("BBBBBB")
+        print(i)
         print(args.display_freq)
+        print(i % args.display_freq)
         if i % args.display_freq == 0:
             checkin(i, lossAll)
         
