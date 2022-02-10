@@ -45,7 +45,7 @@ async def generate_image(
     setattr(final_args, 'size', [width, height])
     setattr(final_args, 'init_image', init_image)
     setattr(final_args, 'init_noise', init_noise)
-    setattr(final_args, 'init_weight', init_weight)
+    setattr(final_args, 'init_weight', float(init_weight))
     setattr(final_args, 'clip_model', clip_model)
     setattr(final_args, 'vqgan_config', 'checkpoints/vqgan_imagenet_f16_16384.yaml')
     setattr(final_args, 'vqgan_checkpoint', 'checkpoints/vqgan_imagenet_f16_16384.ckpt')
