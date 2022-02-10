@@ -688,8 +688,6 @@ def generate_image(args):
         iii = perceptor.encode_image(normalize(make_cutouts(out))).float()
         
         result = []
-        print("AAAAAAAAA")
-        print(args.init_weight)
         if args.init_weight:
             # result.append(F.mse_loss(z, z_orig) * args.init_weight / 2)
             result.append(F.mse_loss(z, torch.zeros_like(z_orig)) * ((1/torch.tensor(i*2 + 1))*args.init_weight) / 2)
@@ -709,6 +707,8 @@ def generate_image(args):
         opt.zero_grad(set_to_none=True)
         lossAll = ascend_txt()
         
+        print("BBBBBB")
+        print(args.display_freq)
         if i % args.display_freq == 0:
             checkin(i, lossAll)
         
