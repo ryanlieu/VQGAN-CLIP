@@ -1,7 +1,7 @@
 # new_bot.py
 import os
 import discord
-# import generate
+import generate
 
 from discord.commands import Option
 from dotenv import load_dotenv
@@ -35,7 +35,7 @@ async def generate_image(
         output: Option(str, "Output image filename", default="output.png"),
     ):
   
-    # await ctx.send("Generating image! Check back in a couple of minutes")
+    await ctx.respond("Generating image! Check back in a couple of minutes")
     final_args = {}
     final_args['prompts'] = prompts
     final_args['image_prompts'] = image_prompts
@@ -78,13 +78,13 @@ async def generate_image(
 
 
 
-    print(final_args)
-    # generate.generate_image(final_args)
+    # print(final_args)
+    generate.generate_image(final_args)
 
 
-    # with open(output, "rb") as fh:
-    #     f = discord.File(fh, filename="output.png")
-    # await ctx.respond(file=f)
+    with open(output, "rb") as fh:
+        f = discord.File(fh, filename="output.png")
+    await ctx.respond(file=f)
     await ctx.respond(final_args)
 
 print("VQGAN discord bot up and running!")
