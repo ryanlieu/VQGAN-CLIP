@@ -1,5 +1,6 @@
 # Originally made by Katherine Crowson (https://github.com/crowsonkb, https://twitter.com/RiversHaveWings)
 # The original BigGAN+CLIP method was by https://twitter.com/advadnoun
+import functools
 
 import argparse
 import math
@@ -38,6 +39,22 @@ import re
 # Supress warnings
 import warnings
 
+def force_async(fn):
+    '''
+    turns a sync function to async function using threads
+    '''
+    from concurrent.futures import ThreadPoolExecutor
+    import asyncio
+    pool = ThreadPoolExecutor()
+
+    @functools.wraps(fn)
+    def wrapper(*args, **kwargs):
+        future = pool.submit(fn, *args, **kwargs)
+        return asyncio.wrap_future(future)  # make it awaitable
+
+    return wrapper
+
+@force_async
 def generate_image(args):
     # pip install taming-transformers doesn't work with Gumbel, but does not yet work with coco etc
     # appending the path does work with Gumbel, but gives ModuleNotFoundError: No module named 'transformers' for coco etc
@@ -953,6 +970,7 @@ def generate_image(args):
                 im.save(p.stdin, 'PNG')
             p.stdin.close()
             p.wait()     
+    return args.output
 
 if __name__ == '__main__':
     # Create the parser

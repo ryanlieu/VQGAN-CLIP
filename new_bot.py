@@ -19,7 +19,7 @@ bot = commands.Bot(
 )
 
 @bot.slash_command(name="generate_image", description="Creates a VQGAN+CLIP generated image, see options for details", guild_ids=['930209526362284042'])
-@commands.max_concurrency(1, per=commands.BucketType.default, wait=False)
+@commands.max_concurrency(1,per=commands.BucketType.default,wait=False)
 async def generate_image(
         ctx: discord.ApplicationContext,
         prompts: Option(str, "Text prompts ex. (apple | surreal:0.5)", default=""),
@@ -81,17 +81,16 @@ async def generate_image(
     setattr(final_args, 'video_style_dir', None)
     setattr(final_args, 'cuda_device', 'cuda:0')
 
-    generate.generate_image(final_args)
-    with open(output, "rb") as fh:
-        f = discord.File(fh, filename=output)
+    final_output = await generate.generate_image(final_args)
+    with open(final_output, "rb") as fh:
+        f = discord.File(fh, filename=final_output)
     await ctx.respond(file=f)
-    
     # await ctx.respond(final_args)
 
 @generate_image.error
 async def on_command_error(ctx,error):
     if isinstance(error, commands.MaxConcurrencyReached):
-        await ctx.respond('Someone else is making an image right now! Check back in a couple of minutes.')
+        await ctx.respond('Bot is currently generating an image! Check back in a couple of minutes')
         return
 
 print("VQGAN discord bot up and running!")
