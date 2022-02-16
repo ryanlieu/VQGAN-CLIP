@@ -18,7 +18,7 @@ bot = commands.Bot(
     intents=discord.Intents.default()
 )
 
-@bot.slash_command(name="generate_image", description="Creates a VQGAN+CLIP generated image, see options for details", guild_ids=['930209526362284042'])
+@bot.slash_command(name="generate_image", description="Creates a VQGAN+CLIP generated image, see options for details", guild_ids=['930209526362284042', '932723041878806578'])
 @commands.max_concurrency(1,per=commands.BucketType.default,wait=False)
 async def generate_image(
         ctx: discord.ApplicationContext,
