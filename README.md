@@ -56,7 +56,9 @@ Or use the ```requirements.txt``` file, which includes version numbers.
 Install packages for the discord bot:
 
 ```sh
-pip install discord.py dotenv
+git submodule update --init
+cd pycord
+python3 -m pip install -U .
 ```
 
 Add your .env discord bot variables to .env:

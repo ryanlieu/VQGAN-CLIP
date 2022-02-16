@@ -43,7 +43,7 @@ async def generate_image(
         output: Option(str, "Output image filename", default="output.png"),
     ):
   
-    await ctx.respond("Generating image! Check back in a couple of minutes")
+    await ctx.respond("Generating image! Check back in a couple of minutes.")
     final_args = SimpleNamespace()
     setattr(final_args, 'prompts', prompts)
     setattr(final_args, 'image_prompts', image_prompts)
@@ -90,8 +90,9 @@ async def generate_image(
 @generate_image.error
 async def on_command_error(ctx,error):
     if isinstance(error, commands.MaxConcurrencyReached):
-        await ctx.respond('Bot is currently generating an image! Check back in a couple of minutes')
-        return
+        await ctx.respond('Bot is currently generating an image! Check back in a couple of minutes.')
+    else:
+        await ctx.respond('Bot ran into an error, try again or have someone reset the bot.')
 
 print("VQGAN discord bot up and running!")
 bot.run(TOKEN)
