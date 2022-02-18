@@ -3,9 +3,11 @@
 import os
 import discord
 from discord.ext import commands
+
 import generate
 
 from discord.commands import Option
+from discord.commands import permissions
 from dotenv import load_dotenv
 from types import SimpleNamespace
 
@@ -20,14 +22,15 @@ bot = commands.Bot(
 
 @bot.slash_command(name="generate_image", description="Creates a VQGAN+CLIP generated image, see options for details", guild_ids=['930209526362284042', '932723041878806578'])
 @commands.max_concurrency(1,per=commands.BucketType.default,wait=False)
+@permissions.has_any_role("admin", "858065991975960607", "858064902140985429")
 async def generate_image(
         ctx: discord.ApplicationContext,
         prompts: Option(str, "Text prompts ex. (apple | surreal:0.5)", default=""),
         image_prompts: Option(str, "Image prompts/target image URL ex. (https://fwb.com/image.png)", default=""),
-        max_iterations: Option(int, "Number of iterations", default=300),
+        max_iterations: Option(int, "Number of iterations", default=500),
         display_freq: Option(int, "Save image iterations", default=50),
-        width: Option(int, "Image width", default=256),
-        height: Option(int, "Image height", default=256),
+        width: Option(int, "Image width", default=512),
+        height: Option(int, "Image height", default=512),
         init_image: Option(str, "Initial image URL ex. (https://fwb.com/image.png)", default=""),
         init_noise: Option(str, "Initial noise image", choices=["pixels", "gradient"], default=""),
         init_weight: Option(str, "Initial weight (float)", default="0"),
@@ -42,8 +45,8 @@ async def generate_image(
         optimiser: Option(str, "Optimiser", choices=['Adam','AdamW','Adagrad','Adamax','DiffGrad','AdamP','RAdam','RMSprop'], default='Adam'),
         output: Option(str, "Output image filename", default="output.png"),
     ):
-  
-    await ctx.respond("Generating image! Check back in a couple of minutes.")
+
+    await ctx.respond(f'Generating image for { ctx.author.mention }! Check back in a couple of minutes.')
     final_args = SimpleNamespace()
     setattr(final_args, 'prompts', prompts)
     setattr(final_args, 'image_prompts', image_prompts)
@@ -81,11 +84,50 @@ async def generate_image(
     setattr(final_args, 'video_style_dir', None)
     setattr(final_args, 'cuda_device', 'cuda:0')
 
+    message = f'Here\'s the final image for { ctx.author.mention }, prompt was: /generate_image'
+    if (prompts != ""):
+        message += f' prompts: {prompts}'
+    if (image_prompts != ""):
+        message += f' image_prompts: {image_prompts}'
+    if (max_iterations != 500):
+        message += f' max_iterations: {max_iterations}'
+    if (display_freq != 50):
+        message += f' display_freq: {display_freq}'
+    if (width != 512):
+        message += f' width: {width}'
+    if (height != 512):
+        message += f' height: {height}'
+    if (init_image != ""):
+        message += f' init_image: {init_image}'
+    if (init_noise != ""):
+        message += f' init_noise: {init_noise}'
+    if (init_weight != "0"):
+        message += f' init_weight: {init_weight}'
+    if (clip_model != "ViT-B/32"):
+        message += f' clip_model: {clip_model}'
+    if (noise_prompt_seeds != ""):
+        message += f' noise_prompt_seeds: {noise_prompt_seeds}'
+    if (noise_prompt_weights != ""):
+        message += f' noise_prompt_weights: {noise_prompt_weights}'
+    if (step_size != "0.1"):
+        message += f' step_size: {step_size}'
+    if (cut_method != "latest"):
+        message += f' cut_method: {cut_method}'
+    if (cutn != 32):
+        message += f' cutn: {cutn}'
+    if (cut_pow != "1"):
+        message += f' cut_pow: {cut_pow}'
+    if (seed != -1):
+        message += f' seed: {seed}'
+    if (optimiser != "Adam"):
+        message += f' optimiser: {optimiser}'
+    if (output != "output.png"):
+        message += f' output: {output}'
     final_output = await generate.generate_image(final_args)
     with open(final_output, "rb") as fh:
         f = discord.File(fh, filename=final_output)
-    await ctx.respond(file=f)
-    # await ctx.respond(final_args)
+    await ctx.respond(message, file=f)
+    # await ctx.respond(message)
 
 @generate_image.error
 async def on_command_error(ctx,error):
