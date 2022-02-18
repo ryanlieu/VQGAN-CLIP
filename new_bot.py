@@ -21,8 +21,8 @@ bot = commands.Bot(
 )
 
 @bot.slash_command(name="generate_image", description="Creates a VQGAN+CLIP generated image, see options for details", guild_ids=['930209526362284042', '932723041878806578'])
+# @permissions.has_any_role("admin", "858065991975960607", "858064902140985429", guild_id="749418486874243212")
 @commands.max_concurrency(1,per=commands.BucketType.default,wait=False)
-@permissions.has_any_role("admin", "858065991975960607", "858064902140985429")
 async def generate_image(
         ctx: discord.ApplicationContext,
         prompts: Option(str, "Text prompts ex. (apple | surreal:0.5)", default=""),
